@@ -182,16 +182,16 @@ public class LDABasedFilteringCandidateUtil {
 
         List<Triple> candidates = new ArrayList<Triple>();
         candidates = searchCandidatesByLabel(label, searchInSurfaceForms);
-        log.info("\t\tnumber of candidates: " + candidates.size());
+        log.info("\t\tnumber of candidates for : " + candidates.size());
         if (candidates.size() == 0) {
             log.info("\t\t\tNo candidates for: " + label);
             if (label.endsWith("'s")) {
-                // removing plural s
+                // removing genitiv s
                 label = label.substring(0, label.lastIndexOf("'s"));
                 candidates = searchCandidatesByLabel(label, searchInSurfaceForms);
                 log.info("\t\t\tEven not with expansion");
             } else if (label.endsWith("s")) {
-                // removing genitiv s
+                // removing plural s
                 label = label.substring(0, label.lastIndexOf("s"));
                 candidates = searchCandidatesByLabel(label, searchInSurfaceForms);
                 log.info("\t\t\tEven not with expansion");

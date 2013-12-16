@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.regex.Pattern;
 
 import org.aksw.agdistis.graph.BreadthFirstSearch;
 import org.aksw.agdistis.graph.HITS;
@@ -47,7 +46,7 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
     private DirectedSparseGraph<Node, String>[] graph = null;
     // needed for the experiment about which properties increase accuracy
     private HashSet<String> restrictedEdges = null;
-    private double threshholdTrigram = 0.9;
+    private double threshholdTrigram = 0.87;
     private int maxDepth = 2;
 
     public static NEDAlgo_selectedBasedCandidates_HITS createAlgorithm(File indexDirectory, File inferencerFile,
@@ -78,15 +77,14 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
         DocumentSupplier supplier = preprocessor;
         supplier = new PosTaggingSupplierDecorator(supplier, PosTaggerFactory.getPosTaggingStep(Language.ENG,
                 new PosTaggingTermFilter() {
-                    private Pattern numberPattern = Pattern.compile(".*\\d.*");
+                    // private Pattern numberPattern = Pattern.compile(".*\\d.*");
 
                     @Override
                     public boolean isTermGood(com.unister.semweb.ml.text.features.Term term) {
-                        // return vocabulary.getId(term.getLemma()) != Vocabulary.WORD_NOT_FOUND;
-                        // XXX ADDED CONDITIONS FOR DEBUGGING!
-                        String lemma = term.getLemma();
-                        return alphabet.contains(lemma) && (lemma.length() > 2)
-                                && (!numberPattern.matcher(lemma).matches());
+                        // String lemma = term.getLemma();
+                        // return alphabet.contains(lemma) && (lemma.length() > 2)
+                        // && (!numberPattern.matcher(lemma).matches());
+                        return alphabet.contains(term.getLemma());
                     }
                 }));
         supplier = new StemmedTextCreatorSupplierDecorator(supplier);
