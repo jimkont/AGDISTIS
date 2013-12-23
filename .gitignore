@@ -9,4 +9,7 @@ bin/
 AIDA-YAGO2-dataset.tsv
 *.jar
 *.log
+*.ods
+*.csv
+Test_*.txt
 lib/aida.jar

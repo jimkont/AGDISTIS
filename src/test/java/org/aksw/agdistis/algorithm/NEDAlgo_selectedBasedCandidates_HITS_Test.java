@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.aksw.agdistis.algorithm.lda.LDABasedNodeConfiguratorFactory;
+import org.aksw.agdistis.algorithm.lda.NEDAlgo_selectedBasedCandidates_HITS;
 import org.aksw.agdistis.webapp.GetDisambiguation;
 import org.junit.Test;
 

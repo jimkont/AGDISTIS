@@ -24,15 +24,15 @@ import cc.mallet.types.Alphabet;
 import cc.mallet.types.Instance;
 
 import com.unister.semweb.commons.collections.associative.TopDoubleObjectCollection;
-import com.unister.semweb.topicmodeling.io.StorageHelper;
 import com.unister.semweb.topicmodeling.lang.Language;
 import com.unister.semweb.topicmodeling.lang.postagging.PosTaggerFactory;
 import com.unister.semweb.topicmodeling.lang.postagging.PosTaggingTermFilter;
-import com.unister.semweb.topicmodeling.preprocessing.SingleDocumentPreprocessor;
-import com.unister.semweb.topicmodeling.preprocessing.docsupplier.DocumentSupplier;
-import com.unister.semweb.topicmodeling.preprocessing.docsupplier.decorator.PosTaggingSupplierDecorator;
-import com.unister.semweb.topicmodeling.preprocessing.docsupplier.decorator.StemmedTextCreatorSupplierDecorator;
 
+import datatypeshelper.io.StorageHelper;
+import datatypeshelper.preprocessing.SingleDocumentPreprocessor;
+import datatypeshelper.preprocessing.docsupplier.DocumentSupplier;
+import datatypeshelper.preprocessing.docsupplier.decorator.PosTaggingSupplierDecorator;
+import datatypeshelper.preprocessing.docsupplier.decorator.StemmedTextCreatorSupplierDecorator;
 import datatypeshelper.utils.doc.Document;
 import datatypeshelper.utils.doc.DocumentText;
 import datatypeshelper.utils.doc.ner.NamedEntitiesInText;
@@ -53,8 +53,7 @@ public class NEDAlgo_LDA implements DisambiguationAlgorithm {
     private static final String ABSTRACT_PREDICAT = "http://dbpedia.org/ontology/abstract";
 
     private HashMap<Integer, String> algorithmicResult = new HashMap<Integer, String>();
-    private TripleIndex index = null;
-    // private SubjectPredicateObjectIndex abstractIndex;
+    private TripleIndex index = null; // private SubjectPredicateObjectIndex abstractIndex;
     // private Vocabulary vocabulary;
     private SingleDocumentPreprocessor preprocessor;
     private LongBasedTopicInferencer inferencer;
@@ -136,12 +135,12 @@ public class NEDAlgo_LDA implements DisambiguationAlgorithm {
     }
 
     private Instance preprocess(String text) {
-        com.unister.semweb.topicmodeling.utils.doc.Document tempDoc = new com.unister.semweb.topicmodeling.utils.doc.Document();
-        tempDoc.addProperty(new com.unister.semweb.topicmodeling.utils.doc.DocumentText(text));
+        Document tempDoc = new Document();
+        tempDoc.addProperty(new DocumentText(text));
         preprocessor.getCorpus(tempDoc);
 
         // create an instance using the pipe of the training data
-        text = tempDoc.getProperty(com.unister.semweb.topicmodeling.utils.doc.DocumentText.class).getText();
+        text = tempDoc.getProperty(DocumentText.class).getText();
         Instance instance = new Instance(text, "NED", "hash" + text.hashCode(), null);
         instance = pipe.instanceFrom(instance);
         return instance;
@@ -338,5 +337,10 @@ public class NEDAlgo_LDA implements DisambiguationAlgorithm {
 
     @Override
     public void setMaxDepth(int maxDepth) {
+    }
+
+    @Override
+    public int getMaxDepth() {
+        return 0;
     }
 }

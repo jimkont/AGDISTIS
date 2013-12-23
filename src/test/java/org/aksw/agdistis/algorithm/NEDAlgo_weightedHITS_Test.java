@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.aksw.agdistis.algorithm.lda.LDABasedNodeConfiguratorFactory;
+import org.aksw.agdistis.algorithm.lda.NEDAlgo_weightedHITS;
 import org.aksw.agdistis.webapp.GetDisambiguation;
 import org.junit.Test;
 
@@ -40,8 +41,10 @@ public class NEDAlgo_weightedHITS_Test {
 
         URL inferencerFile = LDABasedNodeConfiguratorFactory.class.getClassLoader().getResource("wiki_en.inferencer");
         URL pipeFile = LDABasedNodeConfiguratorFactory.class.getClassLoader().getResource("wiki_en.pipe");
-        DisambiguationAlgorithm agdistis = new NEDAlgo_weightedHITS(dataDirectory, nodeType, edgeType,
-                LDABasedNodeConfiguratorFactory.create(new File(inferencerFile.toURI()), new File(pipeFile.toURI())));
+        CandidateUtil cu = new CandidateUtil(dataDirectory);
+        DisambiguationAlgorithm agdistis = new NEDAlgo_weightedHITS(cu, nodeType, edgeType,
+                LDABasedNodeConfiguratorFactory.create(cu.getIndex(), new File(inferencerFile.toURI()), new File(
+                        pipeFile.toURI())));
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
         agdistis.run(d);
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
@@ -88,8 +91,10 @@ public class NEDAlgo_weightedHITS_Test {
 
         URL inferencerFile = LDABasedNodeConfiguratorFactory.class.getClassLoader().getResource("wiki_en.inferencer");
         URL pipeFile = LDABasedNodeConfiguratorFactory.class.getClassLoader().getResource("wiki_en.pipe");
-        DisambiguationAlgorithm agdistis = new NEDAlgo_weightedHITS(dataDirectory, nodeType, edgeType,
-                LDABasedNodeConfiguratorFactory.create(new File(inferencerFile.toURI()), new File(pipeFile.toURI())));
+        CandidateUtil cu = new CandidateUtil(dataDirectory);
+        DisambiguationAlgorithm agdistis = new NEDAlgo_weightedHITS(cu, nodeType, edgeType,
+                LDABasedNodeConfiguratorFactory.create(cu.getIndex(), new File(inferencerFile.toURI()), new File(
+                        pipeFile.toURI())));
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
         agdistis.run(d);
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);

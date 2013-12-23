@@ -161,4 +161,9 @@ public class NEDSpotlightPoster implements DisambiguationAlgorithm {
 	public double getThreshholdTrigram() {
 		return 0;
 	}
+
+    @Override
+    public int getMaxDepth() {
+        return 0;
+    }
 }

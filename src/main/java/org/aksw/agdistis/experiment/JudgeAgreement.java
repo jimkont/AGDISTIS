@@ -65,7 +65,9 @@ public class JudgeAgreement {
         URL resource = classLoader.getResource("applicationContext-jdbc.xml");
         String APPLICATION_CONTEXT_LOCATION = resource.toString().replace("file://", "");
         ApplicationContext context = new ClassPathXmlApplicationContext(APPLICATION_CONTEXT_LOCATION);
-        DbAdapter dbAdapter = context.getBean(DbAdapter.class);
-        return dbAdapter;
+        // FIXME took this out because of incompatibility
+        // DbAdapter dbAdapter = context.getBean(DbAdapter.class);
+        // return dbAdapter;
+        return null;
     }
 }

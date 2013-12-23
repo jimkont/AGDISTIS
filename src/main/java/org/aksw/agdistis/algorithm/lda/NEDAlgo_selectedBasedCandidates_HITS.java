@@ -1,4 +1,4 @@
-package org.aksw.agdistis.algorithm;
+package org.aksw.agdistis.algorithm.lda;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -7,59 +7,111 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
 import org.aksw.agdistis.graph.BreadthFirstSearch;
 import org.aksw.agdistis.graph.HITS;
 import org.aksw.agdistis.graph.Node;
-import org.aksw.agdistis.graph.NodeConfiguratorFactory;
 import org.aksw.agdistis.util.TripleIndex;
 import org.openrdf.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cc.mallet.pipe.Pipe;
+import cc.mallet.topics.LongBasedTopicInferencer;
+import cc.mallet.types.Alphabet;
+
+import com.unister.semweb.topicmodeling.lang.Language;
+import com.unister.semweb.topicmodeling.lang.postagging.PosTaggerFactory;
+import com.unister.semweb.topicmodeling.lang.postagging.PosTaggingTermFilter;
+
+import datatypeshelper.io.StorageHelper;
+import datatypeshelper.preprocessing.SingleDocumentPreprocessor;
+import datatypeshelper.preprocessing.docsupplier.DocumentSupplier;
+import datatypeshelper.preprocessing.docsupplier.decorator.PosTaggingSupplierDecorator;
+import datatypeshelper.preprocessing.docsupplier.decorator.StemmedTextCreatorSupplierDecorator;
 import datatypeshelper.utils.doc.Document;
 import datatypeshelper.utils.doc.ner.NamedEntitiesInText;
 import datatypeshelper.utils.doc.ner.NamedEntityInText;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.Pair;
 
-public class NEDAlgo_HITS implements DisambiguationAlgorithm {
+public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgorithm {
 
-    private static final Logger log = LoggerFactory.getLogger(NEDAlgo_HITS.class);
-
-    private static final int NUMBER_OF_HITS_ITERATIONS = 20;
+    private static Logger log = LoggerFactory.getLogger(NEDAlgo_selectedBasedCandidates_HITS.class);
 
     private HashMap<Integer, String> algorithmicResult = new HashMap<Integer, String>();
     private String edgeType = null;
     private String nodeType = null;
-    private CandidateUtil cu = null;
+    private LDABasedFilteringCandidateUtil cu = null;
     private TripleIndex index = null;
     private DirectedSparseGraph<Node, String>[] graph = null;
     // needed for the experiment about which properties increase accuracy
     private HashSet<String> restrictedEdges = null;
     private double threshholdTrigram = 0.87;
     private int maxDepth = 2;
-    private NodeConfiguratorFactory nodeConfiguratorFactory = null;
 
-    public NEDAlgo_HITS(File indexDirectory, String nodeType, String edgeType) {
+    public static NEDAlgo_selectedBasedCandidates_HITS createAlgorithm(File indexDirectory, File inferencerFile,
+            File pipeFile, String nodeType, String edgeType) {
+        // LDA model --> inferencer
+        LongBasedTopicInferencer inferencer;
+        try {
+            if (inferencerFile.getName().endsWith(".gz")) {
+                inferencer = LongBasedTopicInferencer.readFromModelStateFile(inferencerFile);
+            } else {
+                inferencer = LongBasedTopicInferencer.read(inferencerFile);
+            }
+        } catch (Exception e) {
+            log.error("Couldn't load topic model inferencer. Returning null.", e);
+            return null;
+        }
+
+        Pipe pipe = StorageHelper.readFromFileSavely(pipeFile.getAbsolutePath());
+        if (pipe == null) {
+            log.error("Couldn't load the mallet preprocessing pipe from file. Returning null.");
+            return null;
+        }
+
+        final Alphabet alphabet = inferencer.getAlphabet();
+
+        // create Preprocessing
+        SingleDocumentPreprocessor preprocessor = new SingleDocumentPreprocessor();
+        DocumentSupplier supplier = preprocessor;
+        supplier = new PosTaggingSupplierDecorator(supplier, PosTaggerFactory.getPosTaggingStep(Language.ENG,
+                new PosTaggingTermFilter() {
+                    // private Pattern numberPattern = Pattern.compile(".*\\d.*");
+
+                    @Override
+                    public boolean isTermGood(com.unister.semweb.ml.text.features.Term term) {
+                        // String lemma = term.getLemma();
+                        // return alphabet.contains(lemma) && (lemma.length() > 2)
+                        // && (!numberPattern.matcher(lemma).matches());
+                        return alphabet.contains(term.getLemma());
+                    }
+                }));
+        supplier = new StemmedTextCreatorSupplierDecorator(supplier);
+        preprocessor.setDocumentSupplier(supplier);
+
+        LDABasedFilteringCandidateUtil cu = new LDABasedFilteringCandidateUtil(indexDirectory, preprocessor,
+                inferencer, pipe);
+
+        return new NEDAlgo_selectedBasedCandidates_HITS(indexDirectory, cu, nodeType, edgeType);
+    }
+
+    protected NEDAlgo_selectedBasedCandidates_HITS(File indexDirectory, LDABasedFilteringCandidateUtil cu,
+            String nodeType, String edgeType) {
         this.nodeType = nodeType;
         this.edgeType = edgeType;
-        this.cu = new CandidateUtil(indexDirectory);
+        this.cu = cu;
         this.index = cu.getIndex();
         this.graph = new DirectedSparseGraph[1];
     }
 
-    @Deprecated
     public void runPreStep(Document document, double threshholdTrigram, int documentId) {
         if (graph[documentId] == null) {
             graph[documentId] = new DirectedSparseGraph<Node, String>();
             try {
                 // 0) insert candidates into Text
-                if (nodeConfiguratorFactory != null) {
-                    cu.insertCandidatesIntoText(graph[documentId], document, threshholdTrigram,
-                            nodeConfiguratorFactory.createConfigurator(document));
-                } else {
-                    cu.insertCandidatesIntoText(graph[documentId], document, threshholdTrigram);
-                }
+                cu.insertCandidatesIntoText(graph[documentId], document, threshholdTrigram);
                 // 1) let spread activation/ breadth first search run
                 int maxDepth = 2;
                 BreadthFirstSearch bfs = new BreadthFirstSearch(index);
@@ -72,7 +124,6 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
         }
     }
 
-    @Deprecated
     public void runPostStep(Document document, double threshholdTrigram, int documentId) {
         try {
             algorithmicResult = new HashMap<Integer, String>();
@@ -82,7 +133,7 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
             h.restrictEdges(restrictedEdges);
             // take a copied graph
             DirectedSparseGraph<Node, String> tmp = clone(graph[documentId]);
-            h.runHits(tmp, NUMBER_OF_HITS_ITERATIONS);
+            h.runHits(tmp, 20);
             log.info("DocumentId: " + documentId + " numberOfNodes: " + graph[documentId].getVertexCount()
                     + " reduced to " + tmp.getVertexCount());
             log.info("DocumentId: " + documentId + " numberOfEdges: " + graph[documentId].getEdgeCount()
@@ -151,12 +202,7 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
         try {
             // 0) insert candidates into Text
             log.debug("\tinsert candidates");
-            if (nodeConfiguratorFactory != null) {
-                cu.insertCandidatesIntoText(graph, document, threshholdTrigram,
-                        nodeConfiguratorFactory.createConfigurator(document));
-            } else {
-                cu.insertCandidatesIntoText(graph, document, threshholdTrigram);
-            }
+            cu.insertCandidatesIntoText(graph, document, threshholdTrigram);
 
             // 1) let spread activation/ breadth first searc run
             log.info("\tGraph size before BFS: " + graph.getVertexCount());
@@ -244,16 +290,8 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
         return this.threshholdTrigram;
     }
 
-    public CandidateUtil getCandidateUtils() {
+    public LDABasedFilteringCandidateUtil getCandidateUtils() {
         return cu;
-    }
-
-    public void setNodeConfiguratorFactory(NodeConfiguratorFactory nodeConfiguratorFactory) {
-        this.nodeConfiguratorFactory = nodeConfiguratorFactory;
-    }
-
-    public NodeConfiguratorFactory getNodeConfiguratorFactory() {
-        return nodeConfiguratorFactory;
     }
 
     @Override

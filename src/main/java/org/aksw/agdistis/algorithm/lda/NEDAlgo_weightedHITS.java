@@ -1,4 +1,4 @@
-package org.aksw.agdistis.algorithm;
+package org.aksw.agdistis.algorithm.lda;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -7,10 +7,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import org.aksw.agdistis.algorithm.CandidateUtil;
+import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
 import org.aksw.agdistis.graph.BreadthFirstSearch;
 import org.aksw.agdistis.graph.HITS;
 import org.aksw.agdistis.graph.Node;
-import org.aksw.agdistis.graph.NodeConfiguratorFactory;
 import org.aksw.agdistis.util.TripleIndex;
 import org.openrdf.repository.RepositoryException;
 import org.slf4j.Logger;
@@ -22,11 +23,10 @@ import datatypeshelper.utils.doc.ner.NamedEntityInText;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import edu.uci.ics.jung.graph.util.Pair;
 
-public class NEDAlgo_HITS implements DisambiguationAlgorithm {
+@Deprecated
+public class NEDAlgo_weightedHITS implements DisambiguationAlgorithm {
 
-    private static final Logger log = LoggerFactory.getLogger(NEDAlgo_HITS.class);
-
-    private static final int NUMBER_OF_HITS_ITERATIONS = 20;
+    private static Logger log = LoggerFactory.getLogger(NEDAlgo_weightedHITS.class);
 
     private HashMap<Integer, String> algorithmicResult = new HashMap<Integer, String>();
     private String edgeType = null;
@@ -36,30 +36,36 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
     private DirectedSparseGraph<Node, String>[] graph = null;
     // needed for the experiment about which properties increase accuracy
     private HashSet<String> restrictedEdges = null;
-    private double threshholdTrigram = 0.87;
+    private double threshholdTrigram = 0.9;
     private int maxDepth = 2;
-    private NodeConfiguratorFactory nodeConfiguratorFactory = null;
+    private LDABasedNodeConfiguratorFactory configuratorFactory;
 
-    public NEDAlgo_HITS(File indexDirectory, String nodeType, String edgeType) {
+    public NEDAlgo_weightedHITS(File indexDirectory, String nodeType, String edgeType,
+            LDABasedNodeConfiguratorFactory configuratorFactory) {
         this.nodeType = nodeType;
         this.edgeType = edgeType;
         this.cu = new CandidateUtil(indexDirectory);
         this.index = cu.getIndex();
         this.graph = new DirectedSparseGraph[1];
+        this.configuratorFactory = configuratorFactory;
     }
 
-    @Deprecated
+    public NEDAlgo_weightedHITS(CandidateUtil cu, String nodeType, String edgeType,
+            LDABasedNodeConfiguratorFactory configuratorFactory) {
+        this.nodeType = nodeType;
+        this.edgeType = edgeType;
+        this.cu = cu;
+        this.index = cu.getIndex();
+        this.graph = new DirectedSparseGraph[1];
+        this.configuratorFactory = configuratorFactory;
+    }
+
     public void runPreStep(Document document, double threshholdTrigram, int documentId) {
         if (graph[documentId] == null) {
             graph[documentId] = new DirectedSparseGraph<Node, String>();
             try {
                 // 0) insert candidates into Text
-                if (nodeConfiguratorFactory != null) {
-                    cu.insertCandidatesIntoText(graph[documentId], document, threshholdTrigram,
-                            nodeConfiguratorFactory.createConfigurator(document));
-                } else {
-                    cu.insertCandidatesIntoText(graph[documentId], document, threshholdTrigram);
-                }
+                cu.insertCandidatesIntoText(graph[documentId], document, threshholdTrigram);
                 // 1) let spread activation/ breadth first search run
                 int maxDepth = 2;
                 BreadthFirstSearch bfs = new BreadthFirstSearch(index);
@@ -72,7 +78,6 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
         }
     }
 
-    @Deprecated
     public void runPostStep(Document document, double threshholdTrigram, int documentId) {
         try {
             algorithmicResult = new HashMap<Integer, String>();
@@ -82,7 +87,7 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
             h.restrictEdges(restrictedEdges);
             // take a copied graph
             DirectedSparseGraph<Node, String> tmp = clone(graph[documentId]);
-            h.runHits(tmp, NUMBER_OF_HITS_ITERATIONS);
+            h.runHits(tmp, 20);
             log.info("DocumentId: " + documentId + " numberOfNodes: " + graph[documentId].getVertexCount()
                     + " reduced to " + tmp.getVertexCount());
             log.info("DocumentId: " + documentId + " numberOfEdges: " + graph[documentId].getEdgeCount()
@@ -151,12 +156,8 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
         try {
             // 0) insert candidates into Text
             log.debug("\tinsert candidates");
-            if (nodeConfiguratorFactory != null) {
-                cu.insertCandidatesIntoText(graph, document, threshholdTrigram,
-                        nodeConfiguratorFactory.createConfigurator(document));
-            } else {
-                cu.insertCandidatesIntoText(graph, document, threshholdTrigram);
-            }
+            cu.insertCandidatesIntoText(graph, document, threshholdTrigram,
+                    configuratorFactory.createLDABasedConfigurator(document));
 
             // 1) let spread activation/ breadth first searc run
             log.info("\tGraph size before BFS: " + graph.getVertexCount());
@@ -242,18 +243,6 @@ public class NEDAlgo_HITS implements DisambiguationAlgorithm {
     @Override
     public double getThreshholdTrigram() {
         return this.threshholdTrigram;
-    }
-
-    public CandidateUtil getCandidateUtils() {
-        return cu;
-    }
-
-    public void setNodeConfiguratorFactory(NodeConfiguratorFactory nodeConfiguratorFactory) {
-        this.nodeConfiguratorFactory = nodeConfiguratorFactory;
-    }
-
-    public NodeConfiguratorFactory getNodeConfiguratorFactory() {
-        return nodeConfiguratorFactory;
     }
 
     @Override

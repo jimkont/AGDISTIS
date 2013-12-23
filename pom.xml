@@ -4,7 +4,7 @@
     <groupId>org.aksw</groupId>
     <artifactId>AGDISTIS</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <!-- BUILD -->
     <build>
         <plugins>
@@ -14,6 +14,22 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attached</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
                 </configuration>
             </plugin>
             <plugin>
@@ -54,7 +70,7 @@
                     <scanIntervalSeconds>2</scanIntervalSeconds>
                 </configuration>
             </plugin>
-            <plugin>
+            <!-- <plugin>
                 <groupId>github.numberformat</groupId>
                 <artifactId>blog-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
@@ -70,7 +86,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> -->
         </plugins>
     </build>
     <pluginRepositories>
@@ -114,13 +130,28 @@
         </repository>
     </repositories>
     <dependencies>
-        <!-- Topicmodeling 4 Agdistis -->
+        <!-- Topicmodeling 4 Agdistis
         <dependency>
             <groupId>com.unsiter.semweb</groupId>
             <artifactId>topicmodeling.TM4AGDISTIS</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/topicmodeling.TM4AGDISTIS-0.0.1-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+        </dependency> -->
+        <!-- Topicmodeling lang -->
+        <dependency>
+            <groupId>com.unsiter.semweb</groupId>
+            <artifactId>topicmodeling.lang</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/topicmodeling.lang-0.0.2-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.unsiter.semweb</groupId>
+            <artifactId>commons.commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/commons-4.1.1.jar</systemPath>
         </dependency>
         <!-- extended Mallet -->
         <dependency>
@@ -213,6 +244,24 @@
             <groupId>net.sf.jung</groupId>
             <artifactId>jung-graph-impl</artifactId>
             <version>2.0.1</version>
+        </dependency>
+        <!-- Apache Commons IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <!-- Apache Commons Collections -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.0</version>
+        </dependency>
+        <!-- Apache Commons Lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
         </dependency>
         <!-- local libs -->
         <!-- <dependency> <groupId>de.bluekiwi</groupId> <artifactId>QRToolNED.datatypes</artifactId>

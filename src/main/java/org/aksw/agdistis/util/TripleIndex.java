@@ -22,8 +22,6 @@ import org.apache.lucene.store.MMapDirectory;
 import org.apache.lucene.util.Version;
 import org.slf4j.LoggerFactory;
 
-import edu.northwestern.at.utils.URLUtils;
-
 public class TripleIndex {
     private org.slf4j.Logger log = LoggerFactory.getLogger(TripleIndex.class);
 
@@ -32,7 +30,7 @@ public class TripleIndex {
     public static final String FIELD_NAME_OBJECT_URI = "object_uri";
     public static final String FIELD_NAME_OBJECT_LITERAL = "object_literal";
 
-    private int numberOfDocsRetrievedFromIndex = 1000;
+    private int defaultMaxNumberOfDocsRetrievedFromIndex = 1000;
 
     private Directory directory;
     private IndexSearcher isearcher;
@@ -47,11 +45,15 @@ public class TripleIndex {
             isearcher = new IndexSearcher(ireader);
             // cache = new HashMap<String, List<Triple>>();
         } catch (IOException e) {
-            log.error(e.getLocalizedMessage());
+            log.error("Error while opening the TripleIndex.", e);
         }
     }
 
     public List<Triple> search(String subject, String predicate, String object) {
+        return search(subject, predicate, object, defaultMaxNumberOfDocsRetrievedFromIndex);
+    }
+
+    public List<Triple> search(String subject, String predicate, String object, int maxNumberOfResults) {
         List<Triple> triples = new ArrayList<Triple>();
         BooleanQuery bq = new BooleanQuery();
         try {
@@ -73,7 +75,7 @@ public class TripleIndex {
             }
             if (object != null) {
                 Query q = null;
-                if (URLUtils.isURL(object)) {
+                if (URLHelper.isURL(object)) {
                     q = new TermQuery(new Term(FIELD_NAME_OBJECT_URI, object));
                 } else {
                     Analyzer analyzer = new LiteralAnalyzer(Version.LUCENE_44);
@@ -85,7 +87,7 @@ public class TripleIndex {
             }
             // bq.setMinimumNumberShouldMatch(2);
             // System.out.println(bq);
-            TopScoreDocCollector collector = TopScoreDocCollector.create(numberOfDocsRetrievedFromIndex, true);
+            TopScoreDocCollector collector = TopScoreDocCollector.create(maxNumberOfResults, true);
             isearcher.search(bq, collector);
             ScoreDoc[] hits = collector.topDocs().scoreDocs;
 
@@ -117,6 +119,10 @@ public class TripleIndex {
         } catch (IOException e) {
             log.error(e.getLocalizedMessage());
         }
+    }
+
+    public DirectoryReader getIreader() {
+        return ireader;
     }
 
 }
