@@ -77,6 +77,14 @@ public class LDABasedFilteringCandidateUtil {
         this.inferencer = inferencer;
         this.pipe = pipe;
     }
+    public LDABasedFilteringCandidateUtil(TripleIndex index, SingleDocumentPreprocessor preprocessor,
+            LongBasedTopicInferencer inferencer, Pipe pipe) {
+        this.index = index;
+        n = new NGramDistance(3);
+        this.preprocessor = preprocessor;
+        this.inferencer = inferencer;
+        this.pipe = pipe;
+    }
 
     public void setMaxCandidatesAfterTM(int maxCandidatesAfterTM) {
         this.maxCandidatesAfterTM = maxCandidatesAfterTM;
@@ -256,10 +264,10 @@ public class LDABasedFilteringCandidateUtil {
         String entityText;
         boolean trackCandidate = false;
         boolean surfaceFormOk;
-        boolean followRedirects = !nodeType.equals("http://yago-knowledge.org/resource/");
+//        boolean followRedirects = !nodeType.equals("http://yago-knowledge.org/resource/");
         for (String candidateURL : candidatesWithExpansion.keySet()) {
 
-            if (log.isInfoEnabled() && entity.getNamedEntityUri().equals(candidateURL)) {
+            if ((candidateChecks != null) && entity.getNamedEntityUri().equals(candidateURL)) {
                 trackCandidate = true;
                 candidateChecks[0] = true;
             }

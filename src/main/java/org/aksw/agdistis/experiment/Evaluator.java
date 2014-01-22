@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 
 import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,12 +34,13 @@ public class Evaluator {
     public void fmeasure() {
         double tp = 0, fp = 0, fn = 0, tn = 0;
         int documentId = 0;
+        DisambiguationResults results;
         for (Document document : corpus) {
             try {
                 System.gc();
                 log.debug("Text: " + documentId);
                 if (0 < document.getProperty(DocumentText.class).getText().length()) {
-                    algo.run(document);
+                    results = algo.run(document);
                     NamedEntitiesInText namedEntities = document.getProperty(NamedEntitiesInText.class);
                     for (NamedEntityInText namedEntity : namedEntities) {
                         if (namedEntity.getLength() > 2) {
@@ -54,7 +56,7 @@ public class Evaluator {
                             }
                             correctVotingURL = correctVotingURL.replace("%26", "&");
                             correctVotingURL = algo.getRedirect(correctVotingURL);
-                            String disambiguatedURL = algo.getRedirect(algo.findResult(namedEntity));
+                            String disambiguatedURL = algo.getRedirect(results.findResult(namedEntity));
                             if (correctVotingURL.equals(disambiguatedURL)) {
                                 tp++;
                                 log.debug("\t tp: " + correctVotingURL + " -> " + disambiguatedURL);
@@ -100,13 +102,14 @@ public class Evaluator {
     public void accuracy() {
         double t = 0, n = 0;
         int documentId = 0;
+        DisambiguationResults results;
         for (Document document : corpus) {
             System.gc();
             try {
                 System.gc();
                 log.info("Text: " + documentId);
                 if (0 < document.getProperty(DocumentText.class).getText().length()) {
-                    algo.run(document);
+                    results = algo.run(document);
                     NamedEntitiesInText namedEntities = document.getProperty(NamedEntitiesInText.class);
                     for (NamedEntityInText namedEntity : namedEntities) {
                         if (namedEntity.getLength() > 2) {
@@ -117,7 +120,7 @@ public class Evaluator {
                             if (correctVotingURL.startsWith("dbpr:"))
                                 correctVotingURL = correctVotingURL.replace("dbpr:", "http://dbpedia.org/resource/");
                             correctVotingURL = algo.getRedirect(correctVotingURL);
-                            String disambiguatedURL = algo.getRedirect(algo.findResult(namedEntity));
+                            String disambiguatedURL = algo.getRedirect(results.findResult(namedEntity));
                             if (correctVotingURL != null) {
                                 if (correctVotingURL.equals(disambiguatedURL)) {
                                     t++;

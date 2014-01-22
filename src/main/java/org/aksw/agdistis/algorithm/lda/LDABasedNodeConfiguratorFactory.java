@@ -40,6 +40,10 @@ public class LDABasedNodeConfiguratorFactory implements NodeConfiguratorFactory 
 
     private static final String ABSTRACT_PREDICAT = "http://dbpedia.org/ontology/abstract";
 
+    private double ldaValueWeighting = 10;
+
+    private static Pipe pipe;
+
     public static LDABasedNodeConfiguratorFactory create(TripleIndex index, File inferencerFile, File pipeFile) {
         // LDA model --> inferencer
         LongBasedTopicInferencer inferencer;
@@ -54,10 +58,12 @@ public class LDABasedNodeConfiguratorFactory implements NodeConfiguratorFactory 
             return null;
         }
 
-        Pipe pipe = StorageHelper.readFromFileSavely(pipeFile.getAbsolutePath());
         if (pipe == null) {
-            LOGGER.error("Couldn't load the mallet preprocessing pipe from file. Returning null.");
-            return null;
+            readPipe(pipeFile);
+            if (pipe == null) {
+                LOGGER.error("Couldn't load the mallet preprocessing pipe from file. Returning null.");
+                return null;
+            }
         }
         final Alphabet alphabet = inferencer.getAlphabet();
 
@@ -75,7 +81,11 @@ public class LDABasedNodeConfiguratorFactory implements NodeConfiguratorFactory 
         supplier = new StemmedTextCreatorSupplierDecorator(supplier);
         preprocessor.setDocumentSupplier(supplier);
 
-        return new LDABasedNodeConfiguratorFactory(index, preprocessor, inferencer, pipe);
+        return new LDABasedNodeConfiguratorFactory(index, preprocessor, inferencer);
+    }
+
+    private static synchronized void readPipe(File pipeFile) {
+        pipe = StorageHelper.readFromFileSavely(pipeFile.getAbsolutePath());
     }
 
     protected static double getVectorLength(double[] vector) {
@@ -98,14 +108,12 @@ public class LDABasedNodeConfiguratorFactory implements NodeConfiguratorFactory 
     private TripleIndex index;
     private SingleDocumentPreprocessor preprocessor;
     private LongBasedTopicInferencer inferencer;
-    private Pipe pipe;
 
     public LDABasedNodeConfiguratorFactory(TripleIndex index,
-            SingleDocumentPreprocessor preprocessor, LongBasedTopicInferencer inferencer, Pipe pipe) {
+            SingleDocumentPreprocessor preprocessor, LongBasedTopicInferencer inferencer) {
         this.index = index;
         this.preprocessor = preprocessor;
         this.inferencer = inferencer;
-        this.pipe = pipe;
     }
 
     private Instance preprocess(String text) {
@@ -115,6 +123,10 @@ public class LDABasedNodeConfiguratorFactory implements NodeConfiguratorFactory 
 
         // create an instance using the pipe of the training data
         text = tempDoc.getProperty(DocumentText.class).getText();
+        return createInstance(text);
+    }
+
+    private static synchronized Instance createInstance(String text) {
         Instance instance = new Instance(text, "NED", "hash" + text.hashCode(), null);
         instance = pipe.instanceFrom(instance);
         return instance;
@@ -175,7 +187,7 @@ public class LDABasedNodeConfiguratorFactory implements NodeConfiguratorFactory 
             } else {
                 LOGGER.warn("Couldn't get abstract for \"" + candidateURI + "\".");
             }
-            currentNode.setAuthorityWeightForCalculation(1 + weight);
+            currentNode.setAuthorityWeightForCalculation(1 + (ldaValueWeighting * weight));
         }
 
     }
@@ -193,5 +205,9 @@ public class LDABasedNodeConfiguratorFactory implements NodeConfiguratorFactory 
             }
         }
         return entityAbstract;
+    }
+
+    public void setLdaValueWeighting(double ldaValueWeighting) {
+        this.ldaValueWeighting = ldaValueWeighting;
     }
 }

@@ -4,28 +4,33 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
+import org.aksw.agdistis.datatypes.AgdistisResults;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.aksw.agdistis.graph.Node;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.aksw.agdistis.util.TripleIndex;
 
 import datatypeshelper.utils.doc.Document;
 import datatypeshelper.utils.doc.ner.NamedEntitiesInText;
 import datatypeshelper.utils.doc.ner.NamedEntityInText;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
 
-public class NEDAlgo_wihtoutGraphTechniques {
-    private Logger log = LoggerFactory.getLogger(NEDAlgo_wihtoutGraphTechniques.class);
-    private HashMap<Integer, String> algorithmicResult = new HashMap<Integer, String>();
+public class NEDAlgo_wihtoutGraphTechniques implements DisambiguationAlgorithm {
     private CandidateUtil cu;
+    private double threshholdTrigram;
 
-    public NEDAlgo_wihtoutGraphTechniques(int numberOfDocuments, String languageTag, File indexDirectory, String knowledgeBase) {
-        cu = new CandidateUtil(indexDirectory);
+    public NEDAlgo_wihtoutGraphTechniques(File indexDirectory, String nodeType) {
+        cu = new CandidateUtil(indexDirectory, nodeType);
     }
 
-    public void run(Document document, double threshholdTrigram) {
+    public NEDAlgo_wihtoutGraphTechniques(TripleIndex index, String nodeType) {
+        cu = new CandidateUtil(index, nodeType);
+    }
+
+    public DisambiguationResults run(Document document) {
         NamedEntitiesInText namedEntities = document.getProperty(NamedEntitiesInText.class);
-        algorithmicResult = new HashMap<Integer, String>();
+        Map<Integer, String> results = new HashMap<Integer, String>();
         DirectedSparseGraph<Node, String> graph = new DirectedSparseGraph<Node, String>();
         // 0) insert candidates into Text
         cu.insertCandidatesIntoText(graph, document, threshholdTrigram);
@@ -39,23 +44,14 @@ public class NEDAlgo_wihtoutGraphTechniques {
                 Node m = orderedList.get(i);
                 // there can be one node (candidate) for two labels
                 if (m.containsId(entity.getStartPos())) {
-                    if (!algorithmicResult.containsKey(entity.getStartPos())) {
-                        algorithmicResult.put(entity.getStartPos(), m.getCandidateURI());
+                    if (!results.containsKey(entity.getStartPos())) {
+                        results.put(entity.getStartPos(), m.getCandidateURI());
                         break;
                     }
                 }
             }
         }
-    }
-
-    public String findResult(NamedEntityInText namedEntity) {
-        if (algorithmicResult.containsKey(namedEntity.getStartPos())) {
-            log.debug("\t result  " + algorithmicResult.get(namedEntity.getStartPos()));
-            return algorithmicResult.get(namedEntity.getStartPos());
-        } else {
-            log.debug("\t result null means that we have no candidate for this NE");
-            return null;
-        }
+        return new AgdistisResults(results);
     }
 
     public void close() {
@@ -68,5 +64,29 @@ public class NEDAlgo_wihtoutGraphTechniques {
 
     public CandidateUtil getCu() {
         return cu;
+    }
+
+    @Override
+    public void setThreshholdTrigram(double threshholdTrigram) {
+        this.threshholdTrigram = threshholdTrigram;
+    }
+
+    @Override
+    public double getThreshholdTrigram() {
+        return this.threshholdTrigram;
+    }
+
+    @Override
+    public void setMaxDepth(int maxDepth) {
+    }
+
+    @Override
+    public int getMaxDepth() {
+        return 0;
+    }
+
+    @Override
+    public String getRedirect(String findResult) {
+        return cu.redirect(findResult);
     }
 }

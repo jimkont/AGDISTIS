@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><corpus xmlns="http://semweb.unister.de/xml-corpus-schema-2013">
+<Document id="0">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS06#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>While </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Apple_Inc.">Apple</NamedEntityInText><SimpleTextPart> is an electronics company, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Mango_(clothing)">Mango</NamedEntityInText><SimpleTextPart> is a clothing one and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Orange_(telecommunications)">Orange</NamedEntityInText><SimpleTextPart> is a communication one.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="1">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL01#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/David_Beckham">David</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Victoria_Beckham">Victoria</NamedEntityInText><SimpleTextPart> named their children Brooklyn, Romeo, Cruz, and Harper Seven.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="2">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL03#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>The </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Enola_Gay">Enola Gay</NamedEntityInText><SimpleTextPart> bombed </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Hiroshima">Hiroshima</NamedEntityInText><SimpleTextPart> at the end of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/World_War_II">Second World War</NamedEntityInText><SimpleTextPart>.﻿</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="3">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS04#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Steve_Jobs">Steve</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Bill_Gates">Bill</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Sergey_Brin">Sergey</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Larry_Page">Larry</NamedEntityInText><SimpleTextPart> have drawn a great deal of admiration these days for their pioneering successes that changed the world we live in.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="4">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO07#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Rudi_Völler">Völler </NamedEntityInText><SimpleTextPart>will never forget the match against O</SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Netherlands_national_football_team">ranje </NamedEntityInText><SimpleTextPart>in S</SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/San_Siro">an Siro.</NamedEntityInText><SimpleTextPart></SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="5">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL02#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/David_Beckham">David</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Victoria_Beckham">Victoria</NamedEntityInText><SimpleTextPart> added spice to their marriage.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="6">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL01#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Richard_Nixon">Nixon</NamedEntityInText><SimpleTextPart> resigned after </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Watergate_scandal">Watergate</NamedEntityInText><SimpleTextPart> despite his success in the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Ping_Pong_Diplomacy">Ping-Pong Diplomacy</NamedEntityInText><SimpleTextPart> with </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/People's_Republic_of_China">China</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="7">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS05#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Karl_Albrecht">Karl</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Theo_Albrecht">Theo</NamedEntityInText><SimpleTextPart> made their extreme fortunes selling low-price groceries.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="8">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS09#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Mars_bar">Mars</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Galaxy_(chocolate)">Galaxy</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Bounty_(chocolate_bar)">Bounty</NamedEntityInText><SimpleTextPart> are all chocolate.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="9">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO06#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Norbert_Haug">Haug</NamedEntityInText><SimpleTextPart> congratulated </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/FC_Red_Bull_Salzburg">Red Bull</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="10">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL07#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Angelina_Jolie">Angelina</NamedEntityInText><SimpleTextPart>, her father </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Jon_Voight">Jon</NamedEntityInText><SimpleTextPart>, and her partner </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Brad_Pitt">Brad</NamedEntityInText><SimpleTextPart> never played together in the same movie.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="11">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS08#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Steve_Jobs">Jobs</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Joan_Baez">Baez</NamedEntityInText><SimpleTextPart> dated in the late 1970s, and she performed at his </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Stanford_University">Stanford</NamedEntityInText><SimpleTextPart> memorial.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="12">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO08#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Willi_Landgraf">Landgraf</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Erik_Meijer_(footballer)">Meijer</NamedEntityInText><SimpleTextPart> played at the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/New_Tivoli">Tivoli</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="13">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS07#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Sam_Zell">Sam</NamedEntityInText><SimpleTextPart>, the co-founder of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Equity_International">Equity International</NamedEntityInText><SimpleTextPart>, was given the nickname of &quot;the grave dancer&quot; because of his ability to buy businesses that others thought were dead.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="14">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL09#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Barack_Obama">Obama</NamedEntityInText><SimpleTextPart> welcomed </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Angela_Merkel">Merkel</NamedEntityInText><SimpleTextPart> upon her arrival at </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/John_F._Kennedy_International_Airport">JFK</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="15">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS03#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>Three of the greatest guitarists started their career in a single band : </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Eric_Clapton">Clapton</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Jeff_Beck">Beck</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Jimmy_Page">Page</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="16">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS02#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>In 1980, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Steve_Ballmer">Steve</NamedEntityInText><SimpleTextPart> dropped out of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Stanford_University">Stanford</NamedEntityInText><SimpleTextPart> to join </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Microsoft">Microsoft</NamedEntityInText><SimpleTextPart>, the company behind the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Microsoft_Windows">Windows</NamedEntityInText><SimpleTextPart> operating system.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="17">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL09#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Paris_Hilton">Paris</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Kim_Kardashian">Kim</NamedEntityInText><SimpleTextPart> are both wealthy It Girls who had sex tapes on the Internet.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="18">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL06#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Neil_Armstrong">Armstrong</NamedEntityInText><SimpleTextPart> was the first man on the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Moon">Moon</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="19">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS01#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>After the death of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Steve_Jobs">Steve</NamedEntityInText><SimpleTextPart>, the former CEO of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Apple_Inc.">Apple</NamedEntityInText><SimpleTextPart>, his commencement speech at </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Stanford_University">Stanford</NamedEntityInText><SimpleTextPart> was watched thousands of times.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="20">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO01#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Manchester_City_F.C.">City</NamedEntityInText><SimpleTextPart> won 3:2 against the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Tottenham_Hotspur_F.C.">Spurs</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="21">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL08#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Heidi_Klum">Heidi</NamedEntityInText><SimpleTextPart> and her husband </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Seal_(musician)">Seal</NamedEntityInText><SimpleTextPart> live in </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Las_Vegas,_Nevada">Vegas</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="22">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL03#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Tiger_Woods">Tiger</NamedEntityInText><SimpleTextPart> was lost in the woods when he got divorced from </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Elin_Nordegren">Elin</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="23">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS03#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Cairo_(operating_system)">Cairo</NamedEntityInText><SimpleTextPart> was the code name for a project at </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Microsoft">Microsoft</NamedEntityInText><SimpleTextPart> from 1991 to 1996. Its charter was to build technologies for a next generation operating system that would fulfill the vision of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Bill_Gates">Bill</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="24">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS10#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Robert_Bosch_GmbH">Bosch</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Sharp_Corporation">Sharp</NamedEntityInText><SimpleTextPart> are both home appliances producing companies.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="25">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS05#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>Despite featuring some of the most promininent musicians of their decade --- like </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Frank_Sinatra">Sinatra</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Bob_Dylan">Dylan</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Billy_Joel">Joel</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Carlos_Santana">Santana</NamedEntityInText><SimpleTextPart> --- </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Columbia_Records">Columbia</NamedEntityInText><SimpleTextPart> was aquired by </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Sony_Music_Entertainment">Sony</NamedEntityInText><SimpleTextPart> in the 1980s.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="26">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL10#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/John_P._Kennedy">Kenne</NamedEntityInText><SimpleTextPart>dy was also an active politician, yet he is most known for his writings, some of which he published under the name of Mark Littleton.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="27">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS04#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Paul_Allen">Allen</NamedEntityInText><SimpleTextPart> founded the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/EMP_Museum">EMP</NamedEntityInText><SimpleTextPart> in </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Seattle">Seattle</NamedEntityInText><SimpleTextPart>, which featured exhibitions about </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Jimi_Hendrix">Hendrix</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Bob_Dylan">Dylan</NamedEntityInText><SimpleTextPart>, but also about various science fiction movies.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="28">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL10#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Justin_Bieber">Justin</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Lady_gaga">Stefani</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Kate_Perry">Kate</NamedEntityInText><SimpleTextPart> are among the most popular people on both </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/MTV">MTV</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Twitter">Twitter</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="29">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL07#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Erich_Honecker">Erich</NamedEntityInText><SimpleTextPart> was born in </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Neunkirchen,_Saarland">Neunkirchen</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="30">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL04#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>The </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Red_Army_Faction">RAF</NamedEntityInText><SimpleTextPart> was a terrorist group led by </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Andreas_Baader">Baader</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Ulrike_Meinhof">Meinhof</NamedEntityInText><SimpleTextPart> that killed </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Hanns-Martin_Schleyer">Schleyer</NamedEntityInText><SimpleTextPart>.﻿</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="31">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL05#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Jacqueline_Kennedy_Onassis">Onassis</NamedEntityInText><SimpleTextPart> married </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/John_F._Kennedy">Kennedy</NamedEntityInText><SimpleTextPart> on October 20, 1968.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="32">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO03#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Atlético_Madrid">Atletico</NamedEntityInText><SimpleTextPart> has beaten its archrival </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Real_Madrid_C.F.">Real</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="33">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL05#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Madonna_(entertainer)">Madonna</NamedEntityInText><SimpleTextPart> played </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Eva_Perón">Eva</NamedEntityInText><SimpleTextPart> and was seen with </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Carlos_Leon">Carlos</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="34">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/BUS08#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Pixar">Pixar</NamedEntityInText><SimpleTextPart> produced </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Cars_(film)">Cars</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/John_Lasseter">John</NamedEntityInText><SimpleTextPart> directed it.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="35">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO05#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Thomas_Müller_(footballer)">Thomas</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Mario_Gomez">Mario</NamedEntityInText><SimpleTextPart> are strikers playing in </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/FC_Bayern_Munich">Munich</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="36">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS09#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>The </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Isle_of_wight_festival">Isle of Wight festival</NamedEntityInText><SimpleTextPart> in 1970 was the biggest at its time, surpassing </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Woodstock_Festival">Woodstock</NamedEntityInText><SimpleTextPart> with acts like </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Miles_davis">Davis</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Chicago_(band)">Chicago</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Joni_Mitchell">Mitchell</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="37">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS06#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>After unsuccessful years, aging country star </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Johnny_Cash">Cash</NamedEntityInText><SimpleTextPart> made a grandiose comeback with his </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/American_Recordings_(album)">American Recordings</NamedEntityInText><SimpleTextPart>, recorded at his home with the help of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Rick_Rubin">Rubin</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="38">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS10#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Eric_Clapton">Eric</NamedEntityInText><SimpleTextPart> preferred to play </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Blues">Blues</NamedEntityInText><SimpleTextPart> instead of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Rock_music">Rock</NamedEntityInText><SimpleTextPart>, so he joined </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/John_Mayall">Mayall</NamedEntityInText><SimpleTextPart> &apos;s band.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="39">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO10#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Hertha_BSC">Hertha</NamedEntityInText><SimpleTextPart> won against </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Borussia_Dortmund">Dortmund</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="40">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL06#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>In this musical, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Madonna_(entertainer)">Madonna</NamedEntityInText><SimpleTextPart> played the role of the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/First_Lady_of_Argentina">First Lady</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="41">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO02#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>The </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Arsenal_F.C.">Gunners</NamedEntityInText><SimpleTextPart> now play their home matches at the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Emirates_Stadium">Emirates</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="42">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO09#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Reinhold_Yabo">Yabo</NamedEntityInText><SimpleTextPart> plays for </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Alemannia_Aachen">Aachen</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="43">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS01#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Bob_Dylan">Dylan</NamedEntityInText><SimpleTextPart> performed </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Hurricane_(song)">Hurricane</NamedEntityInText><SimpleTextPart> about the black fighter </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Rubin_Carter">Carter</NamedEntityInText><SimpleTextPart>, from his album </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Desire_(Bob_Dylan_album)">Desire</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="44">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL02#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/The_Sun_(United_Kingdom)">The Sun</NamedEntityInText><SimpleTextPart> and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/The_Times">The Times</NamedEntityInText><SimpleTextPart> reported that </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Greece">Greece</NamedEntityInText><SimpleTextPart> will have to leave the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Eurozone">Euro</NamedEntityInText><SimpleTextPart> soon.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="45">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS02#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Desire_(Bob_Dylan_album)">Desire</NamedEntityInText><SimpleTextPart> contains a duet with </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Emmylou_Harris">Harris</NamedEntityInText><SimpleTextPart> in the song </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Joey_(Bob_Dylan_song)">Joey</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="46">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/CEL04#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Tiger_Woods">Tiger</NamedEntityInText><SimpleTextPart> lost the </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/U.S._Open_(golf)">US Open</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="47">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/MUS07#char=0,</DocumentURI>
+<TextWithNamedEntities><SimpleTextPart>The group formed by </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Josh_Homme">Homme</NamedEntityInText><SimpleTextPart>, </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Dave_Grohl">Grohl</NamedEntityInText><SimpleTextPart>, and </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/John_Paul_Jones_(musician)">Jones</NamedEntityInText><SimpleTextPart> was supposed to be named Caligula, but the name was already taken.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="48">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/SPO04#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Thomas_Müller_(footballer)">Müller </NamedEntityInText><SimpleTextPart>scored a hattrick against E</SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/England_national_football_team">ngland.</NamedEntityInText><SimpleTextPart></SimpleTextPart></TextWithNamedEntities>
+</Document>
+<Document id="49">
+<DocumentURI>http://www.mpi-inf.mpg.de/yago-naga/aida/download/KORE50.tar.gz/AIDA.tsv/POL08#char=0,</DocumentURI>
+<TextWithNamedEntities><NamedEntityInText uri="http://dbpedia.org/resource/Macedonia_(Greece)">Macedonia</NamedEntityInText><SimpleTextPart> is a province of </SimpleTextPart><NamedEntityInText uri="http://dbpedia.org/resource/Greece">Greece</NamedEntityInText><SimpleTextPart>.</SimpleTextPart></TextWithNamedEntities>
+</Document>
+</corpus>

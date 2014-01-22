@@ -15,6 +15,7 @@ import mpi.aida.data.ResultEntity;
 import mpi.aida.data.ResultMention;
 import mpi.aida.graph.similarity.exception.MissingSettingException;
 
+import org.aksw.agdistis.datatypes.AIDAResults;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,6 @@ public class NEDAIDADisambiguator implements DisambiguationAlgorithm {
     private StanfordHybridPreparationSettings prepSettings;
     private Preparator p;
     private CocktailPartyDisambiguationSettings disSettings;
-    private DisambiguationResults results;
 
     public NEDAIDADisambiguator() {
         try {
@@ -44,7 +44,8 @@ public class NEDAIDADisambiguator implements DisambiguationAlgorithm {
     }
 
     @Override
-    public void run(Document document) {
+    public org.aksw.agdistis.datatypes.DisambiguationResults run(Document document) {
+        DisambiguationResults results = null;
         try {
             String text = markupText(document);
             PreparedInput input = p.prepare(text, prepSettings);
@@ -56,21 +57,7 @@ public class NEDAIDADisambiguator implements DisambiguationAlgorithm {
             log.error("Can not process document: " + document.getDocumentId());
             log.error(e.getLocalizedMessage());
         }
-
-    }
-
-    @Override
-    public String findResult(NamedEntityInText namedEntity) {
-        // Print the disambiguation results.
-        int startPos = namedEntity.getStartPos();
-        for (ResultMention rm : results.getResultMentions()) {
-            ResultEntity re = results.getBestEntity(rm);
-            if (rm.getCharacterOffset() == startPos) {
-                String wikiURL = AidaManager.getWikipediaUrl(re);
-                return wikiURL.replace("http://en.wikipedia.org/wiki", "http://dbpedia.org/resource");
-            }
-        }
-        return null;
+        return new AIDAResults(results);
     }
 
     @Override

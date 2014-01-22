@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
+import org.aksw.agdistis.datatypes.AgdistisResults;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.aksw.agdistis.util.DBPedia;
 import org.aksw.agdistis.util.Triple;
 import org.aksw.agdistis.util.TripleIndex;
@@ -38,6 +41,7 @@ import datatypeshelper.utils.doc.DocumentText;
 import datatypeshelper.utils.doc.ner.NamedEntitiesInText;
 import datatypeshelper.utils.doc.ner.NamedEntityInText;
 
+@Deprecated
 public class NEDAlgo_LDA implements DisambiguationAlgorithm {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NEDAlgo_LDA.class);
@@ -52,7 +56,6 @@ public class NEDAlgo_LDA implements DisambiguationAlgorithm {
 
     private static final String ABSTRACT_PREDICAT = "http://dbpedia.org/ontology/abstract";
 
-    private HashMap<Integer, String> algorithmicResult = new HashMap<Integer, String>();
     private TripleIndex index = null; // private SubjectPredicateObjectIndex abstractIndex;
     // private Vocabulary vocabulary;
     private SingleDocumentPreprocessor preprocessor;
@@ -147,17 +150,17 @@ public class NEDAlgo_LDA implements DisambiguationAlgorithm {
     }
 
     @Override
-    public void run(Document document) {
-        algorithmicResult = new HashMap<Integer, String>();
+    public DisambiguationResults run(Document document) {
+        Map<Integer, String> results = new HashMap<Integer, String>();
         NamedEntitiesInText namedEntities = document.getProperty(NamedEntitiesInText.class);
         if (namedEntities == null) {
             LOGGER.error("Got a document without the needed NamedEntitiesInText property. Aborting.");
-            return;
+            return new AgdistisResults(results);
         }
         DocumentText docText = document.getProperty(DocumentText.class);
         if (docText == null) {
             LOGGER.error("Got a document without the needed DocumentText property. Aborting.");
-            return;
+            return new AgdistisResults(results);
         }
         String text = docText.getText();
 
@@ -177,10 +180,11 @@ public class NEDAlgo_LDA implements DisambiguationAlgorithm {
             if (candidates.size() > 0) {
                 bestCandidateURI = determineBestCandidate(topicVector, topicVectorLength, candidates);
                 // add the best candidate
-                algorithmicResult.put(entity.getStartPos(), bestCandidateURI);
+                results.put(entity.getStartPos(), bestCandidateURI);
             }
             // TODO what should be done if there is no candidate?
         }
+        return new AgdistisResults(results);
     }
 
     private Set<String> searchCandidatesByLabel(String label, boolean searchInSurfaceFormsToo) {
@@ -303,17 +307,6 @@ public class NEDAlgo_LDA implements DisambiguationAlgorithm {
             sum += topicVector[i] * entityVector[i];
         }
         return sum / (topicVectorLength * entityVectorLength);
-    }
-
-    @Override
-    public String findResult(NamedEntityInText namedEntity) {
-        if (algorithmicResult.containsKey(namedEntity.getStartPos())) {
-            LOGGER.debug("\t result  " + algorithmicResult.get(namedEntity.getStartPos()));
-            return algorithmicResult.get(namedEntity.getStartPos());
-        } else {
-            LOGGER.debug("\t result null means that we have no candidate for this NE");
-            return null;
-        }
     }
 
     @Override

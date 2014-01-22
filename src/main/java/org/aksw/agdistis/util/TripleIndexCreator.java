@@ -63,7 +63,9 @@ public class TripleIndexCreator {
             System.err.println("Usage: TripleIndexCreator <index-directory> <data-directory> <language-tag>");
             return;
         }
-        String knowledgeBase = "http://dbpedia.org/resource/";// "http://yago-knowledge.org/resource/"
+        // String knowledgeBase = "http://yago-knowledge.org/resource/";
+//        String knowledgeBase = "http://dbpedia.org/resource/";
+        String knowledgeBase = "http://de.dbpedia.org/resource/";
         // String languageTag = "en";
         // String indexDirectory = "/data/m.roeder/daten/dbpedia/3.9/AGDISTIS_Index";
         // String dataDirectory = "/data/m.roeder/daten/dbpedia/3.9";
@@ -72,7 +74,7 @@ public class TripleIndexCreator {
         String languageTag = args[2];
         File labelsWithoutRedirectsFile;
         List<File> tmp = new ArrayList<File>();
-        if ("http://dbpedia.org/resource/".equals(knowledgeBase)) {
+        if (("http://dbpedia.org/resource/".equals(knowledgeBase)) || ("http://de.dbpedia.org/resource/".equals(knowledgeBase))) {
             labelsWithoutRedirectsFile = new File(dataDirectory + "/labels_without_redirects_" + languageTag + ".ttl");
             if (labelsWithoutRedirectsFile.exists()) {
                 tmp.add(labelsWithoutRedirectsFile);
@@ -80,7 +82,7 @@ public class TripleIndexCreator {
                 tmp.add(new File(dataDirectory + "/labels_" + languageTag + ".ttl"));
                 tmp.add(new File(dataDirectory + "/redirects_transitive_" + languageTag + ".ttl"));
             }
-            
+
             tmp.add(new File(dataDirectory + "/instance_types_" + languageTag + ".ttl"));
             tmp.add(new File(dataDirectory + "/mappingbased_properties_" + languageTag + ".ttl"));
             tmp.add(new File(dataDirectory + "/specific_mappingbased_properties_" + languageTag + ".ttl"));
@@ -95,11 +97,12 @@ public class TripleIndexCreator {
             tmp.add(new File(dataDirectory + "/yagoLabels.ttl"));
             tmp.add(new File(dataDirectory + "/yagoDBpediaInstances.ttl"));
         }
-        TripleIndexCreator ic = new TripleIndexCreator(tmp, indexDirectory, knowledgeBase);
+        TripleIndexCreator ic = new TripleIndexCreator();
+        ic.createIndex(tmp, indexDirectory, knowledgeBase);
         ic.close();
     }
 
-    public TripleIndexCreator(List<File> files, String idxDirectory, String baseURI) {
+    public void createIndex(List<File> files, String idxDirectory, String baseURI) {
         try {
             urlAnalyzer = new SimpleAnalyzer(LUCENE_VERSION);
             literalAnalyzer = new LiteralAnalyzer(LUCENE_VERSION);
@@ -169,7 +172,7 @@ public class TripleIndexCreator {
         doc.add(new StringField(TripleIndex.FIELD_NAME_SUBJECT, subject, Store.YES));
         doc.add(new StringField(TripleIndex.FIELD_NAME_PREDICATE, predicate, Store.YES));
         if (isUri) {
-            doc.add(new TextField(TripleIndex.FIELD_NAME_OBJECT_URI, object, Store.YES));
+            doc.add(new StringField(TripleIndex.FIELD_NAME_OBJECT_URI, object, Store.YES));
         } else {
             doc.add(new TextField(TripleIndex.FIELD_NAME_OBJECT_LITERAL, object, Store.YES));
         }

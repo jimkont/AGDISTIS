@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.HashMap;
 
 import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.aksw.agdistis.webapp.GetDisambiguation;
 import org.junit.Assert;
 import org.junit.Test;
@@ -86,18 +87,27 @@ public class NEDAlgo_LDA_Test {
         DisambiguationAlgorithm agdistis = NEDAlgo_LDA.createAlgorithm(new File(DB_PEDIA_INDEX_DIRECTORY),
                 new File(inferencerFile.toURI()), new File(pipeFile.toURI()));
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-        agdistis.run(d);
+        
+        HashMap<NamedEntityInText, String> labelMapping = new HashMap<NamedEntityInText, String>();
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
+        String tempLabel;
+        for (NamedEntityInText namedEntity : namedEntities) {
+            tempLabel = namedEntity.getNamedEntityUri();
+            namedEntity.setNamedEntity(correct.get(namedEntity.getNamedEntityUri()));
+            labelMapping.put(namedEntity, tempLabel);
+        }
+
+        DisambiguationResults algoResults = agdistis.run(d);
         HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
         for (NamedEntityInText namedEntity : namedEntities) {
-            String disambiguatedURL = agdistis.findResult(namedEntity);
+            String disambiguatedURL = algoResults.findResult(namedEntity);
             results.put(namedEntity, disambiguatedURL);
         }
         for (NamedEntityInText namedEntity : results.keySet()) {
             String disambiguatedURL = results.get(namedEntity);
-            System.out.println((correct.get(namedEntity.getLabel()).equals(disambiguatedURL) ? "+ " : "- ")
-                    + namedEntity.getLabel() + " (" + correct.get(namedEntity.getLabel()) + ") -> "
-                    + disambiguatedURL);
+            System.out.println((namedEntity.getNamedEntityUri().equals(disambiguatedURL) ? "+ " : "- ")
+                    + labelMapping.get(namedEntity) + " (" + namedEntity.getNamedEntityUri()
+                    + ") -> " + disambiguatedURL);
             // Assert.assertEquals(correct.get(namedEntity.getLabel()), disambiguatedURL);
         }
 
@@ -134,18 +144,27 @@ public class NEDAlgo_LDA_Test {
         DisambiguationAlgorithm agdistis = NEDAlgo_LDA.createAlgorithm(new File(DB_PEDIA_INDEX_DIRECTORY),
                 new File(inferencerFile.toURI()), new File(pipeFile.toURI()));
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-        agdistis.run(d);
+
+        HashMap<NamedEntityInText, String> labelMapping = new HashMap<NamedEntityInText, String>();
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
+        String tempLabel;
+        for (NamedEntityInText namedEntity : namedEntities) {
+            tempLabel = namedEntity.getNamedEntityUri();
+            namedEntity.setNamedEntity(correct.get(namedEntity.getNamedEntityUri()));
+            labelMapping.put(namedEntity, tempLabel);
+        }
+
+        DisambiguationResults algoResults = agdistis.run(d);
         HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
         for (NamedEntityInText namedEntity : namedEntities) {
-            String disambiguatedURL = agdistis.findResult(namedEntity);
+            String disambiguatedURL = algoResults.findResult(namedEntity);
             results.put(namedEntity, disambiguatedURL);
         }
         for (NamedEntityInText namedEntity : results.keySet()) {
             String disambiguatedURL = results.get(namedEntity);
-            System.out.println((correct.get(namedEntity.getLabel()).equals(disambiguatedURL) ? "+ " : "- ")
-                    + namedEntity.getLabel() + " (" + correct.get(namedEntity.getLabel()) + ") -> "
-                    + disambiguatedURL);
+            System.out.println((namedEntity.getNamedEntityUri().equals(disambiguatedURL) ? "+ " : "- ")
+                    + labelMapping.get(namedEntity) + " (" + namedEntity.getNamedEntityUri()
+                    + ") -> " + disambiguatedURL);
             // Assert.assertEquals(correct.get(namedEntity.getLabel()), disambiguatedURL);
         }
 

@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import org.aksw.agdistis.algorithm.lda.LDABasedNodeConfiguratorFactory;
 import org.aksw.agdistis.algorithm.lda.NEDAlgo_selectedBasedCandidates_HITS;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.aksw.agdistis.webapp.GetDisambiguation;
 import org.junit.Test;
 
@@ -44,11 +45,11 @@ public class NEDAlgo_selectedBasedCandidates_HITS_Test {
         DisambiguationAlgorithm agdistis = NEDAlgo_selectedBasedCandidates_HITS.createAlgorithm(dataDirectory,
                 new File(inferencerFile.toURI()), new File(pipeFile.toURI()), nodeType, edgeType);
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-        agdistis.run(d);
+        DisambiguationResults algoResults = agdistis.run(d);
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
         HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
         for (NamedEntityInText namedEntity : namedEntities) {
-            String disambiguatedURL = agdistis.findResult(namedEntity);
+            String disambiguatedURL = algoResults.findResult(namedEntity);
             results.put(namedEntity, disambiguatedURL);
         }
         for (NamedEntityInText namedEntity : results.keySet()) {
@@ -92,11 +93,11 @@ public class NEDAlgo_selectedBasedCandidates_HITS_Test {
         DisambiguationAlgorithm agdistis = NEDAlgo_selectedBasedCandidates_HITS.createAlgorithm(dataDirectory,
                 new File(inferencerFile.toURI()), new File(pipeFile.toURI()), nodeType, edgeType);
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-        agdistis.run(d);
+        DisambiguationResults algoResults = agdistis.run(d);
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
         HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
         for (NamedEntityInText namedEntity : namedEntities) {
-            String disambiguatedURL = agdistis.findResult(namedEntity);
+            String disambiguatedURL = algoResults.findResult(namedEntity);
             results.put(namedEntity, disambiguatedURL);
         }
         for (NamedEntityInText namedEntity : results.keySet()) {

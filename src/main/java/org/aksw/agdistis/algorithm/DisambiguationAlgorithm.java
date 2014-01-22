@@ -1,13 +1,12 @@
 package org.aksw.agdistis.algorithm;
 
+import org.aksw.agdistis.datatypes.DisambiguationResults;
+
 import datatypeshelper.utils.doc.Document;
-import datatypeshelper.utils.doc.ner.NamedEntityInText;
 
 public interface DisambiguationAlgorithm {
 
-    public abstract void run(Document document);
-
-    public abstract String findResult(NamedEntityInText namedEntity);
+    public abstract DisambiguationResults run(Document document);
 
     public abstract void close();
 

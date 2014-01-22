@@ -9,6 +9,7 @@ import java.util.HashMap;
 import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
 import org.aksw.agdistis.algorithm.NEDAlgo_HITS;
 import org.aksw.agdistis.algorithm.lda.LDABasedNodeConfiguratorFactory;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.aksw.agdistis.webapp.GetDisambiguation;
 import org.junit.Test;
 
@@ -37,11 +38,11 @@ public class AGDISTISTest {
 
         DisambiguationAlgorithm agdistis = new NEDAlgo_HITS(dataDirectory, nodeType, edgeType);
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-        agdistis.run(d);
+        DisambiguationResults algoResults = agdistis.run(d);
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
         HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
         for (NamedEntityInText namedEntity : namedEntities) {
-            String disambiguatedURL = agdistis.findResult(namedEntity);
+            String disambiguatedURL = algoResults.findResult(namedEntity);
             results.put(namedEntity, disambiguatedURL);
         }
 
@@ -73,11 +74,11 @@ public class AGDISTISTest {
 
         DisambiguationAlgorithm agdistis = new NEDAlgo_HITS(dataDirectory, nodeType, edgeType);
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-        agdistis.run(d);
+        DisambiguationResults algoResults = agdistis.run(d);
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
         HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
         for (NamedEntityInText namedEntity : namedEntities) {
-            String disambiguatedURL = agdistis.findResult(namedEntity);
+            String disambiguatedURL = algoResults.findResult(namedEntity);
             results.put(namedEntity, disambiguatedURL);
         }
         for (NamedEntityInText namedEntity : results.keySet()) {
@@ -118,11 +119,11 @@ public class AGDISTISTest {
         URL pipeFile = LDABasedNodeConfiguratorFactory.class.getClassLoader().getResource("wiki_en.pipe");
         DisambiguationAlgorithm agdistis = new NEDAlgo_HITS(dataDirectory, nodeType, edgeType);
         Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-        agdistis.run(d);
+        DisambiguationResults algoResults = agdistis.run(d);
         NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
         HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
         for (NamedEntityInText namedEntity : namedEntities) {
-            String disambiguatedURL = agdistis.findResult(namedEntity);
+            String disambiguatedURL = algoResults.findResult(namedEntity);
             results.put(namedEntity, disambiguatedURL);
         }
         for (NamedEntityInText namedEntity : results.keySet()) {

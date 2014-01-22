@@ -2,6 +2,7 @@ package org.aksw.agdistis.algorithm;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -52,10 +53,16 @@ public class CandidateUtil {
      *            /data/r.usbeck ---> /data/r.usbeck/index/.., --->
      *            /data/r.usbeck/dbpedia_[LANGUAGE]
      */
-    public CandidateUtil(File indexDirectory) {
+    public CandidateUtil(File indexDirectory, String nodeType) {
         index = new TripleIndex(indexDirectory);
         n = new NGramDistance(3);
-
+        this.nodeType = nodeType;
+    }
+    
+    public CandidateUtil(TripleIndex index, String nodeType) {
+        this.index = index;
+        n = new NGramDistance(3);
+        this.nodeType = nodeType;
     }
 
     public void insertCandidatesIntoText(DirectedSparseGraph<Node, String> graph, Document document,
@@ -76,6 +83,7 @@ public class CandidateUtil {
         String expandedLabel = null;
         for (NamedEntityInText entity : namedEntities) {
             String label = text.substring(entity.getStartPos(), entity.getEndPos());
+            label = label.toLowerCase();
             log.info("\tLabel: " + label);
             long start = System.currentTimeMillis();
             if (useHeuristicExpansion) {
@@ -218,61 +226,95 @@ public class CandidateUtil {
 
         log.info("\t\tnumber of candidates: " + candidatesWithExpansion.size());
 
+        boolean candidateChecks[] = null;
+        if (log.isInfoEnabled()) {
+            candidateChecks = new boolean[5];
+            candidateChecks[0] = false;
+        }
+
         boolean added = false;
         boolean surfaceFormOk;
+        boolean trackCandidate = false;
+        String acceptableLabel;
         for (String candidateURL : candidatesWithExpansion.keySet()) {
+
+            if ((candidateChecks != null) && entity.getNamedEntityUri().equals(candidateURL)) {
+                trackCandidate = true;
+                candidateChecks[0] = true;
+            }
 
             // iff it is a disambiguation resource, skip it
             if (isDisambiguationResource(candidateURL)) {
                 continue;
             }
+            if (trackCandidate) {
+                candidateChecks[1] = true;
+            }
+            
+            // if(candidateURL.matches(".*[0-9].*") && (!candidateURL.matches("[0-9][0-9]"))) {
+            // System.out.println(candidateURL);
+            // }
 
             surfaceFormOk = false;
             // rule of thumb: no year numbers in candidates
-            if (candidateURL.startsWith(nodeType) && !candidateURL.matches("[0-9][0-9]")) {
+            if (candidateURL.startsWith(nodeType) && !candidateURL.matches(".*[0-9].*")) {
+                if (trackCandidate) {
+                    candidateChecks[2] = true;
+                }
+
+                // domain = getDomain(candidateURL);
+                // if (domain != EntityDomain.UNKNOWN) {
+                // if (trackCandidate) {
+                // candidateChecks[3] = true;
+                // }
+
                 mapping = candidatesWithExpansion.get(candidateURL);
                 for (int i = 0; (i < mapping.labels.length) && !surfaceFormOk; ++i) {
+                    acceptableLabel = mapping.labels[i].toLowerCase();
                     surfaceForms = mapping.surfaceForms[i];
                     for (String surfaceForm : surfaceForms) {
                         // trigram similarity
-                        if (trigramForURLLabel(surfaceForm, mapping.labels[i]) >= threshholdTrigram) {
+                        if (trigramForURLLabel(surfaceForm.toLowerCase(), acceptableLabel) >= threshholdTrigram) {
                             surfaceFormOk = true;
                             break;
                         }
                     }
+                    // }
                 }
-            }
-            if (surfaceFormOk) {
-                if (fitsIntoDomain(candidateURL, knowledgeBase)) {
-                    addNodeToGraph(graph, nodes, entity, candidateURL, configurator);
-                    added = true;
-                }
-            }
+                if (surfaceFormOk) {
+                    if (trackCandidate) {
+                        candidateChecks[3] = true;
+                    }
 
-            // // rule of thumb: no year numbers in candidates
-            // if (candidateURL.startsWith(nodeType) && !candidateURL.matches("[0-9][0-9]")) {
-            // // trigram similarity
-            // if (trigramForURLLabel(surfaceForm, label) < threshholdTrigram) {
-            // continue;
-            // }
-            // // System.out.println(label + " -> " + surfaceForm + " : " + candidateURL);
-            // // iff it is a disambiguation resource, skip it
-            // if (isDisambiguationResource(candidateURL)) {
-            // continue;
-            // }
-            // // follow redirect
-            // if (!nodeType.equals("http://yago-knowledge.org/resource/")) {
-            // candidateURL = redirect(candidateURL);
-            // }
-            // if (fitsIntoDomain(candidateURL, knowledgeBase)) {
-            // addNodeToGraph(graph, nodes, entity, c, candidateURL, configurator);
-            // added = true;
-            // }
-            // }
+                    // follow redirect
+                    // if (followRedirects) {
+                    // candidateURL = redirect(candidateURL);
+                    // }
+                    if (fitsIntoDomain(candidateURL, knowledgeBase)) {
+                        if (trackCandidate) {
+                            candidateChecks[4] = true;
+                        }
+                        addNodeToGraph(graph, nodes, entity, candidateURL, configurator);
+                        added = true;
+                    }
+                }
+                if (trackCandidate) {
+                    trackCandidate = false;
+                }
+            }
+            if (trackCandidate) {
+                trackCandidate = false;
+            }
         }
-        if (!added && !searchInSurfaceForms)
+        if (!added && !searchInSurfaceForms) {
             checkLabelCandidates(graph, threshholdTrigram, nodes, entity, label, expandedLabel, nodeType, configurator,
                     true);
+        }
+
+        if (candidateChecks != null) {
+            log.info("\"" + label + "\" --> \"" + entity.getNamedEntityUri() + "\" = "
+                    + Arrays.toString(candidateChecks));
+        }
     }
 
     private Map<String, Set<String>> searchCandidatesByLabel(String label, boolean searchInSurfaceFormsToo) {
@@ -379,7 +421,7 @@ public class CandidateUtil {
 
     private boolean fitsIntoDomain(String candidateURL, String knowledgeBase) {
         HashSet<String> whiteList = new HashSet<String>();
-        if ("http://dbpedia.org/resource/".equals(knowledgeBase)) {
+        if (("http://dbpedia.org/resource/".equals(knowledgeBase)) || ("http://de.dbpedia.org/resource/".equals(knowledgeBase))) {
             whiteList.add("http://dbpedia.org/ontology/Place");
             whiteList.add("http://dbpedia.org/ontology/Person");
             whiteList.add("http://dbpedia.org/ontology/Organisation");
@@ -403,6 +445,18 @@ public class CandidateUtil {
             }
         }
         return false;
+    }
+
+    private EntityDomain getDomain(String candidateURL) {
+        List<Triple> tmp = index.search(candidateURL, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", null);
+        EntityDomain domain;
+        for (Triple triple : tmp) {
+            domain = EntityDomain.getDomainForType(triple.getObject());
+            if (domain != EntityDomain.UNKNOWN) {
+                return domain;
+            }
+        }
+        return EntityDomain.UNKNOWN;
     }
 
     public String mapToDbpedia(String correctVotingURL) {

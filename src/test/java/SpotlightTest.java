@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
 import org.aksw.agdistis.algorithm.NEDSpotlightPoster;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.aksw.agdistis.webapp.GetDisambiguation;
 import org.junit.Test;
 
@@ -34,11 +35,11 @@ public class SpotlightTest {
 
 		DisambiguationAlgorithm agdistis = new NEDSpotlightPoster();
 		Document d = GetDisambiguation.textToDocument(preAnnotatedText);
-		agdistis.run(d);
+        DisambiguationResults algoResults = agdistis.run(d);
 		NamedEntitiesInText namedEntities = d.getProperty(NamedEntitiesInText.class);
 		HashMap<NamedEntityInText, String> results = new HashMap<NamedEntityInText, String>();
 		for (NamedEntityInText namedEntity : namedEntities) {
-			String disambiguatedURL = agdistis.findResult(namedEntity);
+			String disambiguatedURL = algoResults.findResult(namedEntity);
 			results.put(namedEntity, disambiguatedURL);
 		}
 		for (NamedEntityInText namedEntity : results.keySet()) {

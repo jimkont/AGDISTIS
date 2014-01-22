@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import org.aksw.agdistis.algorithm.DisambiguationAlgorithm;
+import org.aksw.agdistis.datatypes.AgdistisResults;
+import org.aksw.agdistis.datatypes.DisambiguationResults;
 import org.aksw.agdistis.graph.BreadthFirstSearch;
 import org.aksw.agdistis.graph.HITS;
 import org.aksw.agdistis.graph.Node;
@@ -39,7 +42,6 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
 
     private static Logger log = LoggerFactory.getLogger(NEDAlgo_selectedBasedCandidates_HITS.class);
 
-    private HashMap<Integer, String> algorithmicResult = new HashMap<Integer, String>();
     private String edgeType = null;
     private String nodeType = null;
     private LDABasedFilteringCandidateUtil cu = null;
@@ -51,6 +53,11 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
     private int maxDepth = 2;
 
     public static NEDAlgo_selectedBasedCandidates_HITS createAlgorithm(File indexDirectory, File inferencerFile,
+            File pipeFile, String nodeType, String edgeType) {
+        return createAlgorithm(new TripleIndex(indexDirectory), inferencerFile, pipeFile, nodeType, edgeType);
+    }
+
+    public static NEDAlgo_selectedBasedCandidates_HITS createAlgorithm(TripleIndex index, File inferencerFile,
             File pipeFile, String nodeType, String edgeType) {
         // LDA model --> inferencer
         LongBasedTopicInferencer inferencer;
@@ -91,73 +98,19 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
         supplier = new StemmedTextCreatorSupplierDecorator(supplier);
         preprocessor.setDocumentSupplier(supplier);
 
-        LDABasedFilteringCandidateUtil cu = new LDABasedFilteringCandidateUtil(indexDirectory, preprocessor,
+        LDABasedFilteringCandidateUtil cu = new LDABasedFilteringCandidateUtil(index, preprocessor,
                 inferencer, pipe);
 
-        return new NEDAlgo_selectedBasedCandidates_HITS(indexDirectory, cu, nodeType, edgeType);
+        return new NEDAlgo_selectedBasedCandidates_HITS(cu, nodeType, edgeType);
     }
 
-    protected NEDAlgo_selectedBasedCandidates_HITS(File indexDirectory, LDABasedFilteringCandidateUtil cu,
+    protected NEDAlgo_selectedBasedCandidates_HITS(LDABasedFilteringCandidateUtil cu,
             String nodeType, String edgeType) {
         this.nodeType = nodeType;
         this.edgeType = edgeType;
         this.cu = cu;
         this.index = cu.getIndex();
         this.graph = new DirectedSparseGraph[1];
-    }
-
-    public void runPreStep(Document document, double threshholdTrigram, int documentId) {
-        if (graph[documentId] == null) {
-            graph[documentId] = new DirectedSparseGraph<Node, String>();
-            try {
-                // 0) insert candidates into Text
-                cu.insertCandidatesIntoText(graph[documentId], document, threshholdTrigram);
-                // 1) let spread activation/ breadth first search run
-                int maxDepth = 2;
-                BreadthFirstSearch bfs = new BreadthFirstSearch(index);
-                bfs.run(maxDepth, graph[documentId], edgeType, nodeType);
-            } catch (RepositoryException e) {
-                log.error(e.getLocalizedMessage());
-            } catch (UnsupportedEncodingException e) {
-                log.error(e.getLocalizedMessage());
-            }
-        }
-    }
-
-    public void runPostStep(Document document, double threshholdTrigram, int documentId) {
-        try {
-            algorithmicResult = new HashMap<Integer, String>();
-            NamedEntitiesInText namedEntities = document.getProperty(NamedEntitiesInText.class);
-            // 2) let HITS run
-            HITS h = new HITS();
-            h.restrictEdges(restrictedEdges);
-            // take a copied graph
-            DirectedSparseGraph<Node, String> tmp = clone(graph[documentId]);
-            h.runHits(tmp, 20);
-            log.info("DocumentId: " + documentId + " numberOfNodes: " + graph[documentId].getVertexCount()
-                    + " reduced to " + tmp.getVertexCount());
-            log.info("DocumentId: " + documentId + " numberOfEdges: " + graph[documentId].getEdgeCount()
-                    + " reduced to " + tmp.getEdgeCount());
-            // 3) store the candidate with the highest hub, highest authority
-            // ratio
-            ArrayList<Node> orderedList = new ArrayList<Node>();
-            orderedList.addAll(tmp.getVertices());
-            Collections.sort(orderedList);
-            for (NamedEntityInText entity : namedEntities) {
-                for (int i = 0; i < orderedList.size(); i++) {
-                    Node m = orderedList.get(i);
-                    // there can be one node (candidate) for two labels
-                    if (m.containsId(entity.getStartPos())) {
-                        if (!algorithmicResult.containsKey(entity.getStartPos())) {
-                            algorithmicResult.put(entity.getStartPos(), m.getCandidateURI());
-                            break;
-                        }
-                    }
-                }
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private DirectedSparseGraph<Node, String> clone(DirectedSparseGraph<Node, String> orig) {
@@ -194,9 +147,9 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
      * .utils.doc.Document, double, int)
      */
     @Override
-    public void run(Document document) {
+    public DisambiguationResults run(Document document) {
+        Map<Integer, String> results = new HashMap<Integer, String>();
         NamedEntitiesInText namedEntities = document.getProperty(NamedEntitiesInText.class);
-        algorithmicResult = new HashMap<Integer, String>();
         DirectedSparseGraph<Node, String> graph = new DirectedSparseGraph<Node, String>();
 
         try {
@@ -230,8 +183,8 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
                     Node m = orderedList.get(i);
                     // there can be one node (candidate) for two labels
                     if (m.containsId(entity.getStartPos())) {
-                        if (!algorithmicResult.containsKey(entity.getStartPos())) {
-                            algorithmicResult.put(entity.getStartPos(), m.getCandidateURI());
+                        if (!results.containsKey(entity.getStartPos())) {
+                            results.put(entity.getStartPos(), m.getCandidateURI());
                             break;
                         }
                     }
@@ -246,17 +199,7 @@ public class NEDAlgo_selectedBasedCandidates_HITS implements DisambiguationAlgor
         } catch (UnsupportedEncodingException e) {
             log.error(e.getLocalizedMessage());
         }
-    }
-
-    @Override
-    public String findResult(NamedEntityInText namedEntity) {
-        if (algorithmicResult.containsKey(namedEntity.getStartPos())) {
-            log.debug("\t result  " + algorithmicResult.get(namedEntity.getStartPos()));
-            return algorithmicResult.get(namedEntity.getStartPos());
-        } else {
-            log.debug("\t result null means that we have no candidate for this NE");
-            return null;
-        }
+        return new AgdistisResults(results);
     }
 
     @Override
